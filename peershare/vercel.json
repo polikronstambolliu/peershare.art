@@ -1,0 +1,9 @@
+{
+  "buildCommand": "next build",
+  "outputDirectory": ".next",
+  "framework": "nextjs",
+  "env": {
+    "NEXT_PUBLIC_SUPABASE_URL": "https://htzkgnuclatortmbykpz.supabase.co",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh0emtnbnVjbGF0b3J0bWJ5a3B6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3MTg3MTMsImV4cCI6MjA4ODI5NDcxM30.fpiDPMKhBCZn2gbu4gWJbXIxdIdSZzt_tzVOO4VgK1M"
+  }
+}
