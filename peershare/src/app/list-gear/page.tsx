@@ -14,6 +14,35 @@ const AVAILABILITIES = [
 
 const MAX_GEAR_IMAGES = 5
 
+const AI_CONDITION_MAP: Record<string, string> = {
+  'New': 'excellent',
+  'Like New': 'excellent',
+  'Good': 'good',
+  'Fair': 'fair',
+  'Poor': 'fair',
+}
+
+async function filesToBase64(files: File[]): Promise<{ mediaType: string; data: string }[]> {
+  return Promise.all(
+    files.map(
+      file =>
+        new Promise<{ mediaType: string; data: string }>((resolve, reject) => {
+          const reader = new FileReader()
+          reader.onload = () => {
+            const result = reader.result as string
+            const [, base64] = result.split(',')
+            resolve({
+              mediaType: file.type || 'image/jpeg',
+              data: base64,
+            })
+          }
+          reader.onerror = () => reject(new Error('Failed to read image'))
+          reader.readAsDataURL(file)
+        })
+    )
+  )
+}
+
 export default function ListGearPage() {
   const router = useRouter()
   const supabase = createClient()
@@ -22,11 +51,14 @@ export default function ListGearPage() {
   const [imageFiles, setImageFiles] = useState<File[]>([])
   const [previews, setPreviews] = useState<string[]>([])
   const [saving, setSaving] = useState(false)
+  const [analysing, setAnalysing] = useState(false)
+  const [analyseSuccess, setAnalyseSuccess] = useState(false)
   const [error, setError] = useState('')
 
   const handleImages = (e: React.ChangeEvent<HTMLInputElement>) => {
     const picked = Array.from(e.target.files ?? [])
     if (!picked.length) return
+    setAnalyseSuccess(false)
     setImageFiles(prev => {
       const next = [...prev, ...picked].slice(0, MAX_GEAR_IMAGES)
       setPreviews(current => {
@@ -44,6 +76,45 @@ export default function ListGearPage() {
       URL.revokeObjectURL(prev[index])
       return prev.filter((_, i) => i !== index)
     })
+    setAnalyseSuccess(false)
+  }
+
+  const analyseGear = async () => {
+    if (!imageFiles.length) return
+    setAnalysing(true)
+    setAnalyseSuccess(false)
+    setError('')
+
+    try {
+      const images = await filesToBase64(imageFiles)
+      const res = await fetch('/api/analyse-gear', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ images }),
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        setError(data.error || 'Analysis failed.')
+        return
+      }
+
+      const { title, category, condition, description } = data.analysis ?? {}
+      const mappedCondition = AI_CONDITION_MAP[condition] ?? 'good'
+      const mappedCategory = CATEGORIES.includes(category) ? category : 'Other'
+
+      setForm(prev => ({
+        ...prev,
+        title: typeof title === 'string' ? title : prev.title,
+        category: mappedCategory,
+        condition: mappedCondition,
+        description: typeof description === 'string' ? description : prev.description,
+      }))
+      setAnalyseSuccess(true)
+    } catch {
+      setError('Analysis failed. Please try again.')
+    } finally {
+      setAnalysing(false)
+    }
   }
 
   const submit = async (e: React.FormEvent) => {
@@ -121,6 +192,35 @@ export default function ListGearPage() {
               </div>
               <input type="file" accept="image/*" multiple onChange={handleImages} className="hidden" />
             </label>
+          )}
+          {imageFiles.length > 0 && (
+            <div className="mt-3 space-y-2">
+              <button
+                type="button"
+                onClick={analyseGear}
+                disabled={analysing}
+                style={{
+                  border: '1px solid #E8B800',
+                  color: '#E8B800',
+                  background: 'transparent',
+                  fontFamily: 'monospace',
+                  fontSize: '9px',
+                  letterSpacing: '2px',
+                  textTransform: 'uppercase',
+                  padding: '8px 16px',
+                  borderRadius: '3px',
+                  cursor: analysing ? 'not-allowed' : 'pointer',
+                  opacity: analysing ? 0.7 : 1,
+                }}
+              >
+                {analysing ? 'Analysing...' : '✦ Analyse gear with AI'}
+              </button>
+              {analyseSuccess && (
+                <p style={{ fontFamily: 'monospace', fontSize: '9px', color: '#1D5C45', margin: 0 }}>
+                  ✓ Fields filled — review and edit before sharing
+                </p>
+              )}
+            </div>
           )}
         </div>
 
