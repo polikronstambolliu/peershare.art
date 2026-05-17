@@ -82,12 +82,27 @@ export default function Nav() {
         maxWidth: '1100px',
         margin: '0 auto',
       }}>
-        <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'baseline', gap: '1px' }}>
-          <span style={{ fontFamily: 'Georgia, serif', fontSize: '18px', color: '#F5F0E8' }}>
-            PeerShare
-          </span>
-          <span style={{ fontFamily: 'system-ui, sans-serif', fontSize: '10px', fontWeight: 300, color: '#C24B1E' }}>
-            .art
+        <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <svg width="22" height="22" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+            <circle cx="48" cy="48" r="44" stroke="#C24B1E" strokeWidth="1.5"/>
+            <line x1="36" y1="22" x2="72" y2="48" stroke="#F5F0E8" strokeWidth="1.1" opacity="0.4"/>
+            <line x1="36" y1="22" x2="36" y2="70" stroke="#F5F0E8" strokeWidth="1.1" opacity="0.4"/>
+            <line x1="36" y1="70" x2="72" y2="48" stroke="#F5F0E8" strokeWidth="1.1" opacity="0.4"/>
+            <polygon points="39,34 39,62 66,48" fill="#E8B800"/>
+            <circle cx="36" cy="22" r="9" fill="#1A1714" stroke="#F5F0E8" strokeWidth="1.3"/>
+            <circle cx="36" cy="70" r="9" fill="#1A1714" stroke="#F5F0E8" strokeWidth="1.3"/>
+            <circle cx="72" cy="48" r="9" fill="#1A1714" stroke="#F5F0E8" strokeWidth="1.3"/>
+            <circle cx="36" cy="22" r="3.2" fill="#C24B1E"/>
+            <circle cx="36" cy="70" r="3.2" fill="#C24B1E"/>
+            <circle cx="72" cy="48" r="3.2" fill="#C24B1E"/>
+          </svg>
+          <span style={{ display: 'flex', alignItems: 'baseline', gap: '1px' }}>
+            <span style={{ fontFamily: 'Georgia, serif', fontSize: '18px', color: '#F5F0E8' }}>
+              PeerShare
+            </span>
+            <span style={{ fontFamily: 'system-ui, sans-serif', fontSize: '10px', fontWeight: 300, color: '#C24B1E' }}>
+              .art
+            </span>
           </span>
         </Link>
 
