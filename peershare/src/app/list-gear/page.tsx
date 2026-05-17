@@ -73,7 +73,7 @@ export default function ListGearPage() {
         <div>
           <label className="label">Photo</label>
           <label className="block cursor-pointer">
-            <div className={`card h-44 flex items-center justify-center overflow-hidden hover:border-yellow-400/40 transition-colors ${preview ? '' : 'border-dashed'}`}>
+            <div className={`card h-44 flex items-center justify-center overflow-hidden hover:border-[#C24B1E]/40 transition-colors ${preview ? '' : 'border-dashed'}`}>
               {preview
                 ? <img src={preview} className="w-full h-full object-cover" alt="preview" />
                 : <div className="text-center text-white/30"><div className="text-3xl mb-2">📷</div><p className="text-sm">Click to add a photo</p></div>}
@@ -133,8 +133,8 @@ export default function ListGearPage() {
           <label className="label">Availability</label>
           <div className="space-y-2">
             {AVAILABILITIES.map(a => (
-              <label key={a.v} className={`flex items-start gap-3 p-4 rounded-xl border cursor-pointer transition-colors ${form.availability === a.v ? 'border-yellow-400 bg-yellow-400/5' : 'border-zinc-800 hover:border-white/20'}`}>
-                <input type="radio" name="availability" value={a.v} checked={form.availability === a.v} onChange={() => setForm({ ...form, availability: a.v })} className="mt-0.5" />
+              <label key={a.v} className={`flex items-start gap-3 p-4 rounded-xl border cursor-pointer transition-colors ${form.availability === a.v ? 'border-[#C24B1E] bg-[#C24B1E]/5' : 'border-zinc-800 hover:border-white/20'}`}>
+                <input type="radio" name="availability" value={a.v} checked={form.availability === a.v} onChange={() => setForm({ ...form, availability: a.v })} className="mt-0.5 accent-[#C24B1E]" />
                 <div>
                   <p className="font-medium text-sm">{a.l}</p>
                   <p className="text-xs text-white/40">{a.desc}</p>
@@ -158,7 +158,23 @@ export default function ListGearPage() {
 
         {error && <p className="text-red-400 text-sm">{error}</p>}
 
-        <button type="submit" disabled={saving} className="btn-primary w-full py-3 text-base">
+        <button
+          type="submit"
+          disabled={saving}
+          style={{
+            width: '100%',
+            background: saving ? '#2E2A26' : '#C24B1E',
+            color: '#F5F0E8',
+            fontFamily: 'monospace',
+            fontSize: '10px',
+            letterSpacing: '2px',
+            textTransform: 'uppercase',
+            borderRadius: '3px',
+            border: 'none',
+            padding: '14px',
+            cursor: saving ? 'not-allowed' : 'pointer',
+          }}
+        >
           {saving ? 'Sharing…' : 'Share gear'}
         </button>
       </form>
