@@ -33,14 +33,29 @@ export default async function GearPage({ searchParams }: { searchParams: Promise
               </span>
             </div>
 
-            <h1 style={{ lineHeight: 1, marginBottom: '8px', display: 'flex', alignItems: 'baseline' }}>
-              <span style={{ fontFamily: 'Georgia, serif', fontSize: '44px', color: '#F5F0E8', letterSpacing: '-0.5px' }}>
-                PeerShare
-              </span>
-              <span style={{ fontFamily: 'system-ui, sans-serif', fontSize: '24px', fontWeight: 300, color: '#C24B1E', letterSpacing: '-0.5px', paddingLeft: '2px' }}>
-                .art
-              </span>
-            </h1>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+              <svg width="52" height="52" viewBox="0 0 96 96" fill="none" style={{ flexShrink: 0, display: 'block' }}>
+                <circle cx="48" cy="48" r="44" stroke="#C24B1E" strokeWidth="1.5"/>
+                <line x1="36" y1="22" x2="72" y2="48" stroke="#F5F0E8" strokeWidth="1.1" opacity="0.4"/>
+                <line x1="36" y1="22" x2="36" y2="70" stroke="#F5F0E8" strokeWidth="1.1" opacity="0.4"/>
+                <line x1="36" y1="70" x2="72" y2="48" stroke="#F5F0E8" strokeWidth="1.1" opacity="0.4"/>
+                <polygon points="39,34 39,62 66,48" fill="#E8B800"/>
+                <circle cx="36" cy="22" r="9" fill="#1A1714" stroke="#F5F0E8" strokeWidth="1.3"/>
+                <circle cx="36" cy="70" r="9" fill="#1A1714" stroke="#F5F0E8" strokeWidth="1.3"/>
+                <circle cx="72" cy="48" r="9" fill="#1A1714" stroke="#F5F0E8" strokeWidth="1.3"/>
+                <circle cx="36" cy="22" r="3.2" fill="#C24B1E"/>
+                <circle cx="36" cy="70" r="3.2" fill="#C24B1E"/>
+                <circle cx="72" cy="48" r="3.2" fill="#C24B1E"/>
+              </svg>
+              <h1 style={{ lineHeight: 1, marginBottom: '8px', display: 'flex', alignItems: 'baseline' }}>
+                <span style={{ fontFamily: 'Georgia, serif', fontSize: '44px', color: '#F5F0E8', letterSpacing: '-0.5px' }}>
+                  PeerShare
+                </span>
+                <span style={{ fontFamily: 'system-ui, sans-serif', fontSize: '24px', fontWeight: 300, color: '#C24B1E', letterSpacing: '-0.5px', paddingLeft: '2px' }}>
+                  .art
+                </span>
+              </h1>
+            </div>
 
             <p style={{ fontFamily: 'monospace', fontSize: '10px', letterSpacing: '3px', color: '#4A453E', textTransform: 'uppercase', marginBottom: '12px' }}>
               Film · Rent · Sell
