@@ -48,8 +48,13 @@ export default function Nav() {
     fontSize: '9px',
     letterSpacing: '2px',
     textTransform: 'uppercase',
-    color: '#4A453E',
+    color: '#F5F0E8',
     textDecoration: 'none',
+  }
+
+  const secondaryLinkStyle: React.CSSProperties = {
+    ...linkStyle,
+    color: '#7A7060',
   }
 
   const joinStyle: React.CSSProperties = {
@@ -102,7 +107,7 @@ export default function Nav() {
                   : <span style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#C24B1E', color: '#F5F0E8', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '11px', fontWeight: 700 }}>{initial}</span>}
                 <span>{profile.full_name || profile.username}</span>
               </Link>
-              <button type="button" onClick={handleLogout} style={{ ...linkStyle, background: 'none', border: 'none', cursor: 'pointer' }}>
+              <button type="button" onClick={handleLogout} style={{ ...secondaryLinkStyle, background: 'none', border: 'none', cursor: 'pointer' }}>
                 Sign out
               </button>
             </>
@@ -150,7 +155,7 @@ export default function Nav() {
             <>
               <Link href="/list-gear" onClick={() => setMenuOpen(false)} style={joinStyle}>+ Share Gear</Link>
               <Link href={`/profile/${profile.username}`} onClick={() => setMenuOpen(false)} style={linkStyle}>My Profile</Link>
-              <button type="button" onClick={handleLogout} style={{ ...linkStyle, background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }}>
+              <button type="button" onClick={handleLogout} style={{ ...secondaryLinkStyle, background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }}>
                 Sign out
               </button>
             </>
