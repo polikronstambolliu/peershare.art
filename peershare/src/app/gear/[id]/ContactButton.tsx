@@ -4,6 +4,19 @@ import CoffeeBanner from '@/components/CoffeeBanner'
 import { createClient } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
 
+const brandButtonStyle: React.CSSProperties = {
+  background: '#C24B1E',
+  color: '#F5F0E8',
+  fontFamily: 'monospace',
+  fontSize: '10px',
+  letterSpacing: '2px',
+  textTransform: 'uppercase',
+  borderRadius: '3px',
+  border: 'none',
+  padding: '14px',
+  cursor: 'pointer',
+}
+
 export default function ContactButton({ ownerId, ownerName, gearId, gearTitle }: {
   ownerId: string, ownerName: string, gearId: number, gearTitle: string
 }) {
@@ -34,7 +47,9 @@ export default function ContactButton({ ownerId, ownerName, gearId, gearTitle }:
 
   return (
     <>
-      <button onClick={() => setOpen(true)} className="btn-primary w-full">Contact {ownerName}</button>
+      <button type="button" onClick={() => setOpen(true)} className="w-full" style={brandButtonStyle}>
+        Contact {ownerName}
+      </button>
       {open && (
         <div className="fixed inset-0 bg-black/70 z-50 flex items-end sm:items-center justify-center p-4">
           <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 w-full max-w-md">
@@ -47,7 +62,19 @@ export default function ContactButton({ ownerId, ownerName, gearId, gearTitle }:
             />
             <div className="flex gap-3">
               <button onClick={() => setOpen(false)} className="btn-secondary flex-1">Cancel</button>
-              <button onClick={send} disabled={sending} className="btn-primary flex-1">{sending ? 'Sending…' : 'Send'}</button>
+              <button
+                type="button"
+                onClick={send}
+                disabled={sending}
+                className="flex-1"
+                style={{
+                  ...brandButtonStyle,
+                  background: sending ? '#2E2A26' : '#C24B1E',
+                  cursor: sending ? 'not-allowed' : 'pointer',
+                }}
+              >
+                {sending ? 'Sending…' : 'Send'}
+              </button>
             </div>
           </div>
         </div>
