@@ -135,7 +135,7 @@ export default async function GearPage({ searchParams }: { searchParams: Promise
                 </div>
 
                 <div style={{ padding: '14px 16px 16px' }}>
-                  <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '16px', color: '#F5F0E8', marginBottom: '4px', lineHeight: 1.2 }}>
+                  <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '16px', color: '#F5F0E8', margin: '0 0 4px', lineHeight: 1.2 }}>
                     {item.title}
                   </h3>
                   <p style={{ fontFamily: 'monospace', fontSize: '10px', letterSpacing: '1px', color: '#4A453E', textTransform: 'uppercase', marginBottom: '4px' }}>
