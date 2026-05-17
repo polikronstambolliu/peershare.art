@@ -3,6 +3,8 @@ import Link from 'next/link'
 import ContactButton from './ContactButton'
 import { notFound } from 'next/navigation'
 import { extractAvailability, formatAvailabilityRange } from '@/lib/gear-availability'
+import { getGearImageUrls } from '@/lib/gear-images'
+import GearImageGallery from './GearImageGallery'
 
 export default async function GearDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
@@ -16,17 +18,14 @@ export default async function GearDetailPage({ params }: { params: Promise<{ id:
   const availLabel: Record<string, string> = { free: 'Free to borrow', by_agreement: 'By agreement', paid: `€${item.price_per_day}/day` }
   const parsed = extractAvailability(item.description)
   const availabilityRange = formatAvailabilityRange(parsed.availability)
+  const images = getGearImageUrls(item)
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-12">
       <Link href="/gear" className="text-white/40 hover:text-white text-sm mb-6 inline-block">← Back to gear</Link>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* Image */}
-        <div className="card aspect-square overflow-hidden">
-          {item.image_url
-            ? <img src={item.image_url} alt={item.title} className="w-full h-full object-cover" />
-            : <div className="w-full h-full flex items-center justify-center text-6xl text-white/10">🎬</div>}
-        </div>
+        {/* Image gallery */}
+        <GearImageGallery images={images} title={item.title} />
 
         {/* Info */}
         <div>

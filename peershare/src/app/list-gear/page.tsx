@@ -12,21 +12,38 @@ const AVAILABILITIES = [
   { v: 'paid', l: 'Small fee', desc: 'Cover wear and maintenance costs' },
 ]
 
+const MAX_GEAR_IMAGES = 5
+
 export default function ListGearPage() {
   const router = useRouter()
   const supabase = createClient()
   const [form, setForm] = useState({ title: '', description: '', category: 'Camera', condition: 'good', availability: 'free', price_per_day: '', location: '' })
   const [availabilityWindow, setAvailabilityWindow] = useState({ dateFrom: '', dateTo: '', timeFrom: '', timeTo: '' })
-  const [imageFile, setImageFile] = useState<File | null>(null)
-  const [preview, setPreview] = useState<string | null>(null)
+  const [imageFiles, setImageFiles] = useState<File[]>([])
+  const [previews, setPreviews] = useState<string[]>([])
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
 
-  const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
-    setImageFile(file)
-    setPreview(URL.createObjectURL(file))
+  const handleImages = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const picked = Array.from(e.target.files ?? [])
+    if (!picked.length) return
+    setImageFiles(prev => {
+      const next = [...prev, ...picked].slice(0, MAX_GEAR_IMAGES)
+      setPreviews(current => {
+        current.forEach(url => URL.revokeObjectURL(url))
+        return next.map(file => URL.createObjectURL(file))
+      })
+      return next
+    })
+    e.target.value = ''
+  }
+
+  const removeImage = (index: number) => {
+    setImageFiles(prev => prev.filter((_, i) => i !== index))
+    setPreviews(prev => {
+      URL.revokeObjectURL(prev[index])
+      return prev.filter((_, i) => i !== index)
+    })
   }
 
   const submit = async (e: React.FormEvent) => {
@@ -36,16 +53,18 @@ export default function ListGearPage() {
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) { router.push('/login'); return }
 
-    let image_url = null
-    if (imageFile) {
-      const ext = imageFile.name.split('.').pop()
-      const path = `${Date.now()}.${ext}`
-      const { error: upErr } = await supabase.storage.from('gear-images').upload(path, imageFile)
+    const image_urls: string[] = []
+    for (let i = 0; i < imageFiles.length; i++) {
+      const file = imageFiles[i]
+      const ext = file.name.split('.').pop()
+      const path = `${Date.now()}-${i}.${ext}`
+      const { error: upErr } = await supabase.storage.from('gear-images').upload(path, file)
       if (!upErr) {
         const { data } = supabase.storage.from('gear-images').getPublicUrl(path)
-        image_url = data.publicUrl
+        image_urls.push(data.publicUrl)
       }
     }
+    const image_url = image_urls[0] ?? null
 
     const { error: insErr } = await supabase.from('gear').insert({
       owner_id: user.id,
@@ -57,6 +76,7 @@ export default function ListGearPage() {
       price_per_day: form.availability === 'paid' ? parseFloat(form.price_per_day) : null,
       location: form.location || null,
       image_url,
+      image_urls: image_urls.length ? image_urls : null,
     })
 
     if (insErr) { setError(insErr.message); setSaving(false); return }
@@ -71,15 +91,37 @@ export default function ListGearPage() {
       <form onSubmit={submit} className="space-y-6">
         {/* Image upload */}
         <div>
-          <label className="label">Photo</label>
-          <label className="block cursor-pointer">
-            <div className={`card h-44 flex items-center justify-center overflow-hidden hover:border-[#C24B1E]/40 transition-colors ${preview ? '' : 'border-dashed'}`}>
-              {preview
-                ? <img src={preview} className="w-full h-full object-cover" alt="preview" />
-                : <div className="text-center text-white/30"><div className="text-3xl mb-2">📷</div><p className="text-sm">Click to add a photo</p></div>}
+          <label className="label">Photos (up to {MAX_GEAR_IMAGES})</label>
+          {previews.length > 0 && (
+            <div className="grid grid-cols-3 gap-2 mb-3">
+              {previews.map((src, index) => (
+                <div key={src} className="relative card aspect-square overflow-hidden">
+                  <img src={src} className="w-full h-full object-cover" alt={`Preview ${index + 1}`} />
+                  <button
+                    type="button"
+                    onClick={() => removeImage(index)}
+                    className="absolute top-1 right-1 w-6 h-6 rounded bg-black/70 text-white text-xs leading-none"
+                    aria-label={`Remove photo ${index + 1}`}
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
             </div>
-            <input type="file" accept="image/*" onChange={handleImage} className="hidden" />
-          </label>
+          )}
+          {imageFiles.length < MAX_GEAR_IMAGES && (
+            <label className="block cursor-pointer">
+              <div className="card h-32 flex items-center justify-center overflow-hidden hover:border-[#C24B1E]/40 transition-colors border-dashed">
+                <div className="text-center text-white/30">
+                  <div className="text-3xl mb-2">📷</div>
+                  <p className="text-sm">
+                    {imageFiles.length === 0 ? 'Click to add photos' : `Add more (${imageFiles.length}/${MAX_GEAR_IMAGES})`}
+                  </p>
+                </div>
+              </div>
+              <input type="file" accept="image/*" multiple onChange={handleImages} className="hidden" />
+            </label>
+          )}
         </div>
 
         <div>

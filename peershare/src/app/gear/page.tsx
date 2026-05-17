@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { createServerSupabase } from '@/lib/supabase-server'
 import type { CSSProperties } from 'react'
+import { getPrimaryGearImageUrl } from '@/lib/gear-images'
 
 const CATEGORIES = ['All', 'Camera', 'Lens', 'Lighting', 'Audio', 'Support', 'Monitor', 'Other']
 
@@ -71,8 +72,8 @@ export default async function GearPage({ searchParams }: { searchParams: Promise
             {gear.map(item => (
               <Link key={item.id} href={`/gear/${item.id}`} className="card hover:border-white/20 transition-colors group">
                 <div className="h-48 bg-zinc-800 overflow-hidden">
-                  {item.image_url
-                    ? <img src={item.image_url} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                  {getPrimaryGearImageUrl(item)
+                    ? <img src={getPrimaryGearImageUrl(item)!} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                     : <div className="w-full h-full flex items-center justify-center text-4xl text-white/10">🎬</div>}
                 </div>
                 <div className="p-4">
