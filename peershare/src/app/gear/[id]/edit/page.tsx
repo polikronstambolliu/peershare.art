@@ -333,8 +333,8 @@ export default function EditGearPage() {
               ? '⏸ Pause listing'
               : '▶ Unpause listing'}
         </button>
-        <p style={{ fontFamily: 'monospace', color: '#4A453E', fontSize: '10px', margin: 0 }}>
-          Paused listings are hidden from the gear grid but not deleted.
+        <p style={{ fontFamily: 'monospace', color: '#4A453E', fontSize: '9px', margin: 0 }}>
+          Paused listings are hidden from the gear grid.
         </p>
         {pauseMessage && (
           <p style={{ fontFamily: 'monospace', color: '#C24B1E', fontSize: '10px', margin: 0 }}>
