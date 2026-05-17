@@ -83,7 +83,7 @@ export default function Nav() {
         margin: '0 auto',
       }}>
         <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <svg width="22" height="22" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+          <svg width="22" height="22" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}>
             <circle cx="48" cy="48" r="44" stroke="#C24B1E" strokeWidth="1.5"/>
             <line x1="36" y1="22" x2="72" y2="48" stroke="#F5F0E8" strokeWidth="1.1" opacity="0.4"/>
             <line x1="36" y1="22" x2="36" y2="70" stroke="#F5F0E8" strokeWidth="1.1" opacity="0.4"/>
