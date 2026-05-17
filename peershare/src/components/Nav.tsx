@@ -13,16 +13,25 @@ export default function Nav() {
   const router = useRouter()
 
   useEffect(() => {
-    const getUser = async () => {
+    const init = async () => {
       const { data: { session } } = await supabase.auth.getSession()
-      setUser(session?.user ?? null)
+      if (session?.user) {
+        setUser(session.user)
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('username, full_name, avatar_url')
+          .eq('id', session.user.id)
+          .single()
+        if (profile) setProfile(profile)
+      }
     }
-    getUser()
+    init()
 
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null)
-    })
-
+    const { data: listener } = supabase.auth.onAuthStateChange(
+      async (_event, session) => {
+        setUser(session?.user ?? null)
+      }
+    )
     return () => listener.subscription.unsubscribe()
   }, [])
 
