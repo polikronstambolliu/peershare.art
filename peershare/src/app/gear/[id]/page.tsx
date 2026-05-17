@@ -31,7 +31,10 @@ export default async function GearDetailPage({ params }: { params: Promise<{ id:
         <div>
           <div className="flex items-center gap-2 mb-2">
             <span className="badge badge-gray">{item.category}</span>
-            <span className={`badge ${item.availability === 'free' ? 'badge-green' : item.availability === 'by_agreement' ? 'badge-blue' : 'badge-yellow'}`}>
+            <span
+              className={`badge shrink-0 ${item.availability === 'free' ? 'badge-green' : item.availability === 'by_agreement' ? 'badge-blue' : ''}`}
+              style={item.availability === 'paid' ? { border: '1px solid #C24B1E', color: '#C24B1E', background: 'transparent' } : undefined}
+            >
               {availLabel[item.availability] || item.availability}
             </span>
           </div>
@@ -43,9 +46,9 @@ export default async function GearDetailPage({ params }: { params: Promise<{ id:
             <div className="mb-4">
               <p className="text-xs text-white/40 mb-1">Availability status</p>
               <div className="w-full rounded-full bg-zinc-800 h-2 overflow-hidden">
-                <div className="h-full bg-yellow-400 w-full" />
+                <div className="h-full w-full" style={{ background: '#C24B1E' }} />
               </div>
-              <p className="text-xs text-yellow-400 mt-2">{availabilityRange}</p>
+              <p className="text-xs mt-2" style={{ color: '#7A7060' }}>{availabilityRange}</p>
             </div>
           )}
 
@@ -57,12 +60,12 @@ export default async function GearDetailPage({ params }: { params: Promise<{ id:
           <div className="card p-4 mb-6">
             <p className="text-xs text-white/40 mb-2">Shared by</p>
             <Link href={`/profile/${(item.profiles as any)?.username}`} className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-yellow-400 flex items-center justify-center text-black font-bold">
+              <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold" style={{ background: '#2E2A26', color: '#F5F0E8' }}>
                 {(item.profiles as any)?.full_name?.[0]?.toUpperCase() || (item.profiles as any)?.username?.[0]?.toUpperCase()}
               </div>
               <div>
                 <p className="font-semibold text-sm">{(item.profiles as any)?.full_name || (item.profiles as any)?.username}</p>
-                <p className="text-xs text-yellow-400">⭐ {(item.profiles as any)?.karma ?? 0} karma</p>
+                <p className="text-xs" style={{ color: '#E8B800' }}>⭐ {(item.profiles as any)?.karma ?? 0} karma</p>
               </div>
             </Link>
           </div>
@@ -74,7 +77,23 @@ export default async function GearDetailPage({ params }: { params: Promise<{ id:
             <Link href={`/gear/${item.id}/edit`} className="btn-secondary w-full text-center block">Edit listing</Link>
           )}
           {!user && (
-            <Link href="/login" className="btn-primary w-full text-center block">Log in to contact owner</Link>
+            <Link
+              href="/login"
+              className="w-full text-center block"
+              style={{
+                background: '#C24B1E',
+                color: '#F5F0E8',
+                fontFamily: 'monospace',
+                fontSize: '10px',
+                letterSpacing: '2px',
+                textTransform: 'uppercase',
+                borderRadius: '3px',
+                padding: '14px',
+                textDecoration: 'none',
+              }}
+            >
+              Log in to contact owner
+            </Link>
           )}
         </div>
       </div>
