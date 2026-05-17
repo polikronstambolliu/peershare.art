@@ -74,8 +74,20 @@ export default function LoginPage() {
               placeholder="••••••••"
               value={password}
               onChange={e => setPassword(e.target.value)}
-              style={{ width: '100%', background: '#111009', border: '1px solid #2E2A26', color: '#F5F0E8', fontFamily: 'monospace', fontSize: '13px', padding: '12px 14px', borderRadius: '3px', outline: 'none', boxSizing: 'border-box' }}
+              className="login-password-field"
+              style={{ width: '100%', background: '#111009', border: '1px solid #2E2A26', color: '#F5F0E8', fontFamily: 'monospace', fontSize: '13px', padding: '12px 14px', borderRadius: '3px', outline: 'none', boxSizing: 'border-box', colorScheme: 'dark' }}
             />
+            <style jsx>{`
+              .login-password-field::placeholder {
+                color: #4A453E;
+                opacity: 1;
+              }
+            `}</style>
+            <div style={{ textAlign: 'right', marginTop: '8px' }}>
+              <Link href="/forgot-password" style={{ fontFamily: 'monospace', fontSize: '9px', color: '#4A453E', textDecoration: 'none' }}>
+                Forgot password?
+              </Link>
+            </div>
           </div>
 
           {error && (
