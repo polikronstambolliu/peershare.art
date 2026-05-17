@@ -92,10 +92,11 @@ export default function EditProfilePage() {
           <label className="label">Profile photo</label>
           <div className="flex items-center gap-4">
             <button type="button" onClick={() => fileRef.current?.click()}
-              className="relative w-20 h-20 rounded-full overflow-hidden bg-yellow-400 flex items-center justify-center hover:opacity-80 transition-opacity group">
+              className="relative w-20 h-20 rounded-full overflow-hidden flex items-center justify-center hover:opacity-80 transition-opacity group"
+              style={{ background: '#2E2A26' }}>
               {displayAvatar
                 ? <img src={displayAvatar} className="w-full h-full object-cover" alt="avatar" />
-                : <span className="text-black font-bold text-2xl">{initial}</span>}
+                : <span className="font-bold text-2xl" style={{ color: '#F5F0E8' }}>{initial}</span>}
               <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                 <span className="text-white text-xs font-medium">Change</span>
               </div>
@@ -133,16 +134,33 @@ export default function EditProfilePage() {
               <button type="button" key={s} onClick={() => toggleSkill(s)}
                 className={`px-3 py-1.5 rounded-lg text-sm border transition-colors ${
                   skills.includes(s)
-                    ? 'bg-yellow-400 text-black border-yellow-400 font-medium'
+                    ? 'font-medium'
                     : 'border-zinc-700 text-white/50 hover:border-white/30 hover:text-white'
-                }`}>
+                }`}
+                style={skills.includes(s) ? { background: '#C24B1E', color: '#F5F0E8', borderColor: '#C24B1E' } : undefined}>
                 {s}
               </button>
             ))}
           </div>
         </div>
 
-        <button type="submit" disabled={saving} className="btn-primary w-full py-3 text-base">
+        <button
+          type="submit"
+          disabled={saving}
+          style={{
+            width: '100%',
+            background: saving ? '#2E2A26' : '#C24B1E',
+            color: '#F5F0E8',
+            fontFamily: 'monospace',
+            fontSize: '10px',
+            letterSpacing: '2px',
+            textTransform: 'uppercase',
+            borderRadius: '3px',
+            border: 'none',
+            padding: '14px',
+            cursor: saving ? 'not-allowed' : 'pointer',
+          }}
+        >
           {saving ? 'Saving…' : 'Save profile'}
         </button>
       </form>
