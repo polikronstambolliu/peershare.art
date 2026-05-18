@@ -10,11 +10,34 @@ const ALL_SKILLS = [
   'Script Supervisor', 'Make-up', 'Art Director', 'Set Designer'
 ]
 
+const contactInputStyle: React.CSSProperties = {
+  width: '100%',
+  background: '#111009',
+  border: '1px solid #2E2A26',
+  color: '#F5F0E8',
+  fontFamily: 'monospace',
+  fontSize: '13px',
+  padding: '12px',
+  borderRadius: '3px',
+  outline: 'none',
+  boxSizing: 'border-box',
+}
+
+const contactLabelStyle: React.CSSProperties = {
+  fontFamily: 'monospace',
+  fontSize: '10px',
+  letterSpacing: '2px',
+  color: '#4A453E',
+  textTransform: 'uppercase',
+  display: 'block',
+  marginBottom: '8px',
+}
+
 export default function EditProfilePage() {
   const supabase = createClient()
   const router = useRouter()
   const fileRef = useRef<HTMLInputElement>(null)
-  const [form, setForm] = useState({ full_name: '', bio: '', location: '' })
+  const [form, setForm] = useState({ full_name: '', bio: '', location: '', phone: '', whatsapp: '', signal: '' })
   const [skills, setSkills] = useState<string[]>([])
   const [saving, setSaving] = useState(false)
   const [loading, setLoading] = useState(true)
@@ -29,7 +52,14 @@ export default function EditProfilePage() {
       if (!user) { router.push('/login'); return }
       const { data: profile } = await supabase.from('profiles').select('*').eq('id', user.id).single()
       if (profile) {
-        setForm({ full_name: profile.full_name || '', bio: profile.bio || '', location: profile.location || '' })
+        setForm({
+          full_name: profile.full_name || '',
+          bio: profile.bio || '',
+          location: profile.location || '',
+          phone: profile.phone || '',
+          whatsapp: profile.whatsapp || '',
+          signal: profile.signal || '',
+        })
         setSkills(profile.skills || [])
         setUsername(profile.username)
         setAvatarUrl(profile.avatar_url || null)
@@ -69,6 +99,9 @@ export default function EditProfilePage() {
       full_name: form.full_name,
       bio: form.bio,
       location: form.location,
+      phone: form.phone || null,
+      whatsapp: form.whatsapp || null,
+      signal: form.signal || null,
       skills,
       avatar_url: newAvatarUrl
     }).eq('id', user.id)
@@ -141,6 +174,46 @@ export default function EditProfilePage() {
                 {s}
               </button>
             ))}
+          </div>
+        </div>
+
+        <div>
+          <p style={{ fontFamily: 'monospace', fontSize: '9px', color: '#4A453E', marginBottom: '16px' }}>
+            Your contact details are only visible to signed-in members. Guests cannot see them.
+          </p>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <div>
+              <label style={contactLabelStyle}>Phone number</label>
+              <input
+                type="tel"
+                value={form.phone}
+                onChange={e => setForm({ ...form, phone: e.target.value })}
+                style={contactInputStyle}
+              />
+            </div>
+
+            <div>
+              <label style={contactLabelStyle}>WhatsApp</label>
+              <input
+                type="tel"
+                placeholder="Same as phone or different number"
+                value={form.whatsapp}
+                onChange={e => setForm({ ...form, whatsapp: e.target.value })}
+                style={contactInputStyle}
+              />
+            </div>
+
+            <div>
+              <label style={contactLabelStyle}>Signal</label>
+              <input
+                type="tel"
+                placeholder="Same as phone or different number"
+                value={form.signal}
+                onChange={e => setForm({ ...form, signal: e.target.value })}
+                style={contactInputStyle}
+              />
+            </div>
           </div>
         </div>
 

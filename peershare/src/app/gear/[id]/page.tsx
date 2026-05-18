@@ -71,7 +71,10 @@ export default async function GearDetailPage({ params }: { params: Promise<{ id:
           </div>
 
           {user && user.id !== (item.profiles as any)?.id && (
-            <ContactButton ownerId={(item.profiles as any)?.id} ownerName={(item.profiles as any)?.full_name || (item.profiles as any)?.username} gearId={item.id} gearTitle={item.title} />
+            <ContactButton
+              ownerId={(item.profiles as any)?.id}
+              ownerName={(item.profiles as any)?.full_name || (item.profiles as any)?.username}
+            />
           )}
           {user && user.id === (item.profiles as any)?.id && (
             <Link href={`/gear/${item.id}/edit`} className="btn-secondary w-full text-center block">Edit listing</Link>

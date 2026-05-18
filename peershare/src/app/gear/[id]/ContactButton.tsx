@@ -1,10 +1,8 @@
 'use client'
 import { useState } from 'react'
-import CoffeeBanner from '@/components/CoffeeBanner'
 import { createClient } from '@/lib/supabase'
-import { useRouter } from 'next/navigation'
 
-const brandButtonStyle: React.CSSProperties = {
+const contactButtonStyle: React.CSSProperties = {
   background: '#C24B1E',
   color: '#F5F0E8',
   fontFamily: 'monospace',
@@ -15,70 +13,174 @@ const brandButtonStyle: React.CSSProperties = {
   border: 'none',
   padding: '14px',
   cursor: 'pointer',
+  width: '100%',
 }
 
-export default function ContactButton({ ownerId, ownerName, gearId, gearTitle }: {
-  ownerId: string, ownerName: string, gearId: number, gearTitle: string
+type OwnerContact = {
+  phone: string | null
+  whatsapp: string | null
+  signal: string | null
+  full_name: string | null
+}
+
+function digitsOnly(value: string) {
+  return value.replace(/\D/g, '')
+}
+
+export default function ContactButton({ ownerId, ownerName }: {
+  ownerId: string
+  ownerName: string
 }) {
   const [open, setOpen] = useState(false)
-  const [msg, setMsg] = useState(`Hi! I'd love to borrow your "${gearTitle}". Is it available?`)
-  const [sending, setSending] = useState(false)
-  const [sent, setSent] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [contact, setContact] = useState<OwnerContact | null>(null)
   const supabase = createClient()
-  const router = useRouter()
 
-  const send = async () => {
-    setSending(true)
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) { router.push('/login'); return }
-    await supabase.from('messages').insert({ sender_id: user.id, receiver_id: ownerId, gear_id: gearId, content: msg })
-    setSent(true)
-    setSending(false)
+  const handleClick = async () => {
+    if (open) {
+      setOpen(false)
+      return
+    }
+    setLoading(true)
+    const { data } = await supabase
+      .from('profiles')
+      .select('phone, whatsapp, signal, full_name')
+      .eq('id', ownerId)
+      .single()
+    setContact(data)
+    setLoading(false)
+    setOpen(true)
   }
 
-  if (sent) return (
-    <div className="space-y-4">
-      <div className="bg-green-900/30 border border-green-800 rounded-xl p-4 text-green-400 text-sm text-center">
-        Message sent to {ownerName}! ✓
-      </div>
-      <CoffeeBanner />
-    </div>
-  )
+  const displayName = contact?.full_name || ownerName
+  const whatsapp = contact?.whatsapp?.trim() || ''
+  const signal = contact?.signal?.trim() || ''
+  const phone = contact?.phone?.trim() || ''
+  const hasWhatsapp = Boolean(whatsapp)
+  const hasSignal = Boolean(signal)
+  const hasPhoneOnly = Boolean(phone) && !hasWhatsapp && !hasSignal
+  const hasAnyContact = hasWhatsapp || hasSignal || hasPhoneOnly
 
   return (
-    <>
-      <button type="button" onClick={() => setOpen(true)} className="w-full" style={brandButtonStyle}>
-        Contact {ownerName}
+    <div>
+      <button
+        type="button"
+        onClick={handleClick}
+        disabled={loading}
+        style={{
+          ...contactButtonStyle,
+          background: loading ? '#2E2A26' : '#C24B1E',
+          cursor: loading ? 'not-allowed' : 'pointer',
+        }}
+      >
+        {loading ? 'Loading…' : '▶ Contact Peer'}
       </button>
-      {open && (
-        <div className="fixed inset-0 bg-black/70 z-50 flex items-end sm:items-center justify-center p-4">
-          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 w-full max-w-md">
-            <h3 className="font-bold mb-4">Send a message</h3>
-            <textarea
-              value={msg}
-              onChange={e => setMsg(e.target.value)}
-              rows={4}
-              className="input resize-none mb-4"
-            />
-            <div className="flex gap-3">
-              <button onClick={() => setOpen(false)} className="btn-secondary flex-1">Cancel</button>
-              <button
-                type="button"
-                onClick={send}
-                disabled={sending}
-                className="flex-1"
+
+      {open && contact && (
+        <div
+          style={{
+            marginTop: '16px',
+            padding: '20px',
+            background: '#111009',
+            border: '1px solid #2E2A26',
+            borderRadius: '4px',
+          }}
+        >
+          <h3 style={{ fontFamily: 'Georgia, serif', color: '#F5F0E8', fontSize: '18px', margin: '0 0 8px', fontWeight: 400 }}>
+            Contact {displayName}
+          </h3>
+          <p style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic', color: '#7A7060', fontSize: '13px', margin: '0 0 20px' }}>
+            Arrange everything directly — gear, timing, location. PeerShare stays out of it.
+          </p>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            {hasWhatsapp && (
+              <a
+                href={`https://wa.me/${digitsOnly(whatsapp)}`}
+                target="_blank"
+                rel="noopener noreferrer"
                 style={{
-                  ...brandButtonStyle,
-                  background: sending ? '#2E2A26' : '#C24B1E',
-                  cursor: sending ? 'not-allowed' : 'pointer',
+                  display: 'block',
+                  width: '100%',
+                  textAlign: 'center',
+                  background: '#1D5C45',
+                  color: '#C4DAD0',
+                  fontFamily: 'monospace',
+                  fontSize: '10px',
+                  letterSpacing: '2px',
+                  textTransform: 'uppercase',
+                  padding: '14px',
+                  borderRadius: '3px',
+                  textDecoration: 'none',
                 }}
               >
-                {sending ? 'Sending…' : 'Send'}
-              </button>
-            </div>
+                ▶ WhatsApp
+              </a>
+            )}
+
+            {hasSignal && (
+              <a
+                href={`https://signal.me/#p/+${digitsOnly(signal)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: 'block',
+                  width: '100%',
+                  textAlign: 'center',
+                  background: '#2E2A26',
+                  color: '#F5F0E8',
+                  fontFamily: 'monospace',
+                  fontSize: '10px',
+                  letterSpacing: '2px',
+                  textTransform: 'uppercase',
+                  padding: '14px',
+                  borderRadius: '3px',
+                  textDecoration: 'none',
+                }}
+              >
+                ▶ Signal
+              </a>
+            )}
+
+            {hasPhoneOnly && (
+              <div style={{ textAlign: 'center', padding: '8px 0' }}>
+                <p style={{ fontFamily: 'monospace', color: '#4A453E', fontSize: '9px', letterSpacing: '2px', textTransform: 'uppercase', margin: '0 0 8px' }}>
+                  Phone
+                </p>
+                <p style={{ fontFamily: 'monospace', color: '#F5F0E8', fontSize: '16px', margin: 0 }}>
+                  {phone}
+                </p>
+              </div>
+            )}
+
+            {!hasAnyContact && (
+              <p style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic', color: '#7A7060', fontSize: '13px', margin: 0, textAlign: 'center' }}>
+                This member hasn&apos;t added contact details yet. Try the Help Board to reach them.
+              </p>
+            )}
           </div>
+
+          <button
+            type="button"
+            onClick={() => setOpen(false)}
+            style={{
+              display: 'block',
+              margin: '20px auto 0',
+              background: 'none',
+              border: 'none',
+              fontFamily: 'monospace',
+              color: '#4A453E',
+              fontSize: '9px',
+              letterSpacing: '2px',
+              textTransform: 'uppercase',
+              cursor: 'pointer',
+              padding: 0,
+            }}
+          >
+            Close
+          </button>
         </div>
       )}
-    </>
+    </div>
   )
 }
