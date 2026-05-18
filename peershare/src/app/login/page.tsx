@@ -5,6 +5,22 @@ import Link from 'next/link'
 
 const LOGIN_TIMEOUT_MS = 30000
 
+const loginInputStyle: React.CSSProperties = {
+  width: '100%',
+  background: '#111009',
+  border: '1px solid #2E2A26',
+  color: '#F5F0E8',
+  fontFamily: 'monospace',
+  fontSize: '13px',
+  padding: '12px 14px',
+  borderRadius: '3px',
+  outline: 'none',
+  boxSizing: 'border-box',
+  colorScheme: 'dark',
+  WebkitBoxShadow: '0 0 0 1000px #111009 inset',
+  WebkitTextFillColor: '#F5F0E8',
+}
+
 export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -60,7 +76,7 @@ export default function LoginPage() {
               placeholder="your@email.com"
               value={email}
               onChange={e => setEmail(e.target.value)}
-              style={{ width: '100%', background: '#111009', border: '1px solid #2E2A26', color: '#F5F0E8', fontFamily: 'monospace', fontSize: '13px', padding: '12px 14px', borderRadius: '3px', outline: 'none', boxSizing: 'border-box' }}
+              style={loginInputStyle}
             />
           </div>
 
@@ -75,7 +91,7 @@ export default function LoginPage() {
               value={password}
               onChange={e => setPassword(e.target.value)}
               className="login-password-field"
-              style={{ width: '100%', background: '#111009', border: '1px solid #2E2A26', color: '#F5F0E8', fontFamily: 'monospace', fontSize: '13px', padding: '12px 14px', borderRadius: '3px', outline: 'none', boxSizing: 'border-box', colorScheme: 'dark' }}
+              style={loginInputStyle}
             />
             <style jsx>{`
               .login-password-field::placeholder {

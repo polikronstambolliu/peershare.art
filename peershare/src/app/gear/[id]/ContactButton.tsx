@@ -81,7 +81,7 @@ export default function ContactButton({ ownerId, ownerName }: {
           style={{
             marginTop: '16px',
             padding: '20px',
-            background: '#111009',
+            background: '#1A1714',
             border: '1px solid #2E2A26',
             borderRadius: '4px',
           }}
