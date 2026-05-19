@@ -24,7 +24,7 @@ export default async function GearPage({ searchParams }: { searchParams: Promise
       <div style={{ borderBottom: '1px solid #2E2A26', padding: '40px 24px 32px' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', flexWrap: 'wrap', gap: '24px' }}>
           <div>
-            <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
+            <div className="flex flex-wrap gap-2" style={{ marginBottom: '16px' }}>
               <span style={{ background: '#2E2A26', color: '#7A7060', fontFamily: 'monospace', fontSize: '10px', letterSpacing: '3px', padding: '4px 10px', borderRadius: '2px' }}>
                 NODE · MÜNCHEN · MUC/DE
               </span>
@@ -33,8 +33,8 @@ export default async function GearPage({ searchParams }: { searchParams: Promise
               </span>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-              <svg width="52" height="52" viewBox="0 0 96 96" fill="none" style={{ flexShrink: 0, display: 'block' }}>
+            <div className="flex items-center gap-3 sm:gap-4">
+              <svg className="w-10 h-10 sm:w-[52px] sm:h-[52px] shrink-0 block" viewBox="0 0 96 96" fill="none">
                 <circle cx="48" cy="48" r="44" stroke="#C24B1E" strokeWidth="1.5"/>
                 <line x1="36" y1="22" x2="72" y2="48" stroke="#F5F0E8" strokeWidth="1.1" opacity="0.4"/>
                 <line x1="36" y1="22" x2="36" y2="70" stroke="#F5F0E8" strokeWidth="1.1" opacity="0.4"/>
@@ -47,11 +47,11 @@ export default async function GearPage({ searchParams }: { searchParams: Promise
                 <circle cx="36" cy="70" r="3.2" fill="#C24B1E"/>
                 <circle cx="72" cy="48" r="3.2" fill="#C24B1E"/>
               </svg>
-              <h1 style={{ lineHeight: 1, marginBottom: '8px', display: 'flex', alignItems: 'baseline' }}>
-                <span style={{ fontFamily: 'Georgia, serif', fontSize: '44px', color: '#F5F0E8', letterSpacing: '-0.5px' }}>
+              <h1 className="flex items-baseline" style={{ lineHeight: 1, marginBottom: '8px' }}>
+                <span className="text-[32px] sm:text-[44px]" style={{ fontFamily: 'Georgia, serif', color: '#F5F0E8', letterSpacing: '-0.5px' }}>
                   PeerShare
                 </span>
-                <span style={{ fontFamily: 'system-ui, sans-serif', fontSize: '24px', fontWeight: 300, color: '#C24B1E', letterSpacing: '-0.5px', paddingLeft: '2px' }}>
+                <span className="text-[17px] sm:text-[24px]" style={{ fontFamily: 'system-ui, sans-serif', fontWeight: 300, color: '#C24B1E', letterSpacing: '-0.5px', paddingLeft: '2px' }}>
                   .art
                 </span>
               </h1>
@@ -70,7 +70,7 @@ export default async function GearPage({ searchParams }: { searchParams: Promise
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             {user ? (
-              <Link href="/list-gear" style={{ background: '#C24B1E', color: '#F5F0E8', fontFamily: 'monospace', fontSize: '10px', letterSpacing: '2px', textTransform: 'uppercase', padding: '10px 20px', borderRadius: '3px', textDecoration: 'none' }}>
+              <Link href="/list-gear" className="hidden sm:inline-block" style={{ background: '#C24B1E', color: '#F5F0E8', fontFamily: 'monospace', fontSize: '10px', letterSpacing: '2px', textTransform: 'uppercase', padding: '10px 20px', borderRadius: '3px', textDecoration: 'none' }}>
                 + Share Gear
               </Link>
             ) : (
