@@ -23,19 +23,37 @@ export default async function GearPage({ searchParams }: { searchParams: Promise
       <div style={{ width: '100%', lineHeight: 0 }}>
         <svg
           width="100%"
+          height="12"
+          viewBox="0 0 800 12"
+          preserveAspectRatio="none"
+          xmlns="http://www.w3.org/2000/svg"
+          style={{ display: 'block' }}
+          className="sm:hidden"
+        >
+          <defs>
+            <pattern id="clapper-sm" x="0" y="0" width="24" height="12" patternUnits="userSpaceOnUse">
+              <rect width="24" height="12" fill="#F5F0E8"/>
+              <polygon points="0,0 12,0 24,12 12,12" fill="#1A1714"/>
+            </pattern>
+          </defs>
+          <rect width="800" height="12" fill="url(#clapper-sm)" opacity="0.5"/>
+        </svg>
+        <svg
+          width="100%"
           height="20"
           viewBox="0 0 800 20"
           preserveAspectRatio="none"
           xmlns="http://www.w3.org/2000/svg"
           style={{ display: 'block' }}
+          className="hidden sm:block"
         >
           <defs>
-            <pattern id="clapper" x="0" y="0" width="40" height="20" patternUnits="userSpaceOnUse">
+            <pattern id="clapper-lg" x="0" y="0" width="40" height="20" patternUnits="userSpaceOnUse">
               <rect width="40" height="20" fill="#F5F0E8"/>
               <polygon points="0,0 20,0 40,20 20,20" fill="#1A1714"/>
             </pattern>
           </defs>
-          <rect width="800" height="20" fill="url(#clapper)" opacity="0.5"/>
+          <rect width="800" height="20" fill="url(#clapper-lg)" opacity="0.5"/>
         </svg>
       </div>
 
