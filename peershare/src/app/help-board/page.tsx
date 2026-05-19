@@ -38,19 +38,45 @@ export default async function HelpBoardPage() {
     .order('created_at', { ascending: false })
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-12">
+    <div style={{ minHeight: '100vh', background: '#1A1714' }}>
+      <div style={{ width: '100%', lineHeight: 0 }}>
+        <svg width="100%" height="12" viewBox="0 0 800 12"
+          preserveAspectRatio="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="block sm:hidden">
+          <defs>
+            <pattern id="clapper-sm-hb" x="0" y="0" width="24" height="12" patternUnits="userSpaceOnUse">
+              <rect width="24" height="12" fill="#F5F0E8"/>
+              <polygon points="0,0 12,0 24,12 12,12" fill="#1A1714"/>
+            </pattern>
+          </defs>
+          <rect width="800" height="12" fill="url(#clapper-sm-hb)" opacity="0.5"/>
+        </svg>
+        <svg width="100%" height="20" viewBox="0 0 800 20"
+          preserveAspectRatio="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="hidden sm:block">
+          <defs>
+            <pattern id="clapper-lg-hb" x="0" y="0" width="40" height="20" patternUnits="userSpaceOnUse">
+              <rect width="40" height="20" fill="#F5F0E8"/>
+              <polygon points="0,0 20,0 40,20 20,20" fill="#1A1714"/>
+            </pattern>
+          </defs>
+          <rect width="800" height="20" fill="url(#clapper-lg-hb)" opacity="0.5"/>
+        </svg>
+      </div>
+      <div className="max-w-4xl mx-auto px-4 py-12">
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h1 className="text-3xl font-bold">Help Board</h1>
-          <p className="text-white/40 mt-1">Filmmakers who need a hand — crew, gear, locations, anything</p>
+          <h1 style={{ fontFamily: 'Georgia, serif', color: '#F5F0E8', fontSize: '28px', fontWeight: 400 }}>Help Board</h1>
+          <p style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic', color: '#7A7060', fontSize: '13px', marginTop: '4px' }}>Filmmakers who need a hand — crew, gear, locations, anything</p>
         </div>
         <Link href="/help-board/new" style={buttonStyle}>+ Post request</Link>
       </div>
 
       <div style={{
-        background: 'rgba(194, 75, 30, 0.1)',
-        border: '1px solid rgba(194, 75, 30, 0.2)',
-        borderRadius: '4px',
+        borderLeft: '2px solid #C24B1E',
+        background: '#111009',
         padding: '16px',
         marginBottom: '32px',
         fontSize: '14px',
@@ -88,12 +114,13 @@ export default async function HelpBoardPage() {
           ))}
         </div>
       ) : (
-        <div className="text-center py-24 text-white/30">
-          <p className="text-2xl mb-3">No open requests</p>
-          <p className="text-sm mb-6">Be the first to ask for help</p>
+        <div className="text-center py-24">
+          <p style={{ fontFamily: 'Georgia, serif', color: '#4A453E', fontSize: '22px', marginBottom: '12px' }}>No open requests</p>
+          <p className="text-sm mb-6" style={{ color: '#4A453E' }}>Be the first to ask for help</p>
           <Link href="/help-board/new" style={buttonStyle}>Post a request</Link>
         </div>
       )}
+      </div>
     </div>
   )
 }
