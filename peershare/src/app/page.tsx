@@ -20,6 +20,25 @@ export default async function GearPage({ searchParams }: { searchParams: Promise
   return (
     <div style={{ background: '#1A1714', minHeight: '100vh' }}>
 
+      <div style={{ width: '100%', lineHeight: 0 }}>
+        <svg
+          width="100%"
+          height="20"
+          viewBox="0 0 800 20"
+          preserveAspectRatio="none"
+          xmlns="http://www.w3.org/2000/svg"
+          style={{ display: 'block' }}
+        >
+          <defs>
+            <pattern id="clapper" x="0" y="0" width="40" height="20" patternUnits="userSpaceOnUse">
+              <rect width="40" height="20" fill="#F5F0E8"/>
+              <polygon points="0,0 20,0 40,20 20,20" fill="#1A1714"/>
+            </pattern>
+          </defs>
+          <rect width="800" height="20" fill="url(#clapper)" opacity="0.5"/>
+        </svg>
+      </div>
+
       {/* HEADER */}
       <div style={{ borderBottom: '1px solid #2E2A26', padding: '40px 24px 32px' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', flexWrap: 'wrap', gap: '24px' }}>
