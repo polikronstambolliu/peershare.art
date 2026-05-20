@@ -71,16 +71,16 @@ export default async function GearPage({ searchParams }: { searchParams: Promise
             <div className="flex items-center gap-3 sm:gap-4">
               <svg className="w-10 h-10 sm:w-[52px] sm:h-[52px] shrink-0 block" viewBox="0 0 96 96" fill="none">
                 <circle cx="48" cy="48" r="44" stroke="#C24B1E" strokeWidth="1.5"/>
-                <line x1="36" y1="22" x2="72" y2="48" stroke="#F5F0E8" strokeWidth="1.1" opacity="0.4"/>
-                <line x1="36" y1="22" x2="36" y2="70" stroke="#F5F0E8" strokeWidth="1.1" opacity="0.4"/>
-                <line x1="36" y1="70" x2="72" y2="48" stroke="#F5F0E8" strokeWidth="1.1" opacity="0.4"/>
-                <polygon points="39,34 39,62 66,48" fill="#E8B800"/>
-                <circle cx="36" cy="22" r="9" fill="#1A1714" stroke="#F5F0E8" strokeWidth="1.3"/>
-                <circle cx="36" cy="70" r="9" fill="#1A1714" stroke="#F5F0E8" strokeWidth="1.3"/>
-                <circle cx="72" cy="48" r="9" fill="#1A1714" stroke="#F5F0E8" strokeWidth="1.3"/>
-                <circle cx="36" cy="22" r="3.2" fill="#C24B1E"/>
-                <circle cx="36" cy="70" r="3.2" fill="#C24B1E"/>
-                <circle cx="72" cy="48" r="3.2" fill="#C24B1E"/>
+                <line x1="21" y1="11" x2="21" y2="85" stroke="#F5F0E8" strokeWidth="1.1" opacity="0.4"/>
+                <line x1="21" y1="11" x2="89" y2="48" stroke="#F5F0E8" strokeWidth="1.1" opacity="0.4"/>
+                <line x1="21" y1="85" x2="89" y2="48" stroke="#F5F0E8" strokeWidth="1.1" opacity="0.4"/>
+                <polygon points="21,11 21,85 89,48" fill="#E8B800"/>
+                <circle cx="21" cy="11" r="9" fill="#1A1714" stroke="#F5F0E8" strokeWidth="1.3"/>
+                <circle cx="21" cy="85" r="9" fill="#1A1714" stroke="#F5F0E8" strokeWidth="1.3"/>
+                <circle cx="89" cy="48" r="9" fill="#1A1714" stroke="#F5F0E8" strokeWidth="1.3"/>
+                <circle cx="21" cy="11" r="3.2" fill="#C24B1E"/>
+                <circle cx="21" cy="85" r="3.2" fill="#C24B1E"/>
+                <circle cx="89" cy="48" r="3.2" fill="#C24B1E"/>
               </svg>
               <h1 className="flex items-baseline" style={{ lineHeight: 1, marginBottom: '8px' }}>
                 <span className="text-[32px] sm:text-[44px]" style={{ fontFamily: 'Georgia, serif', color: '#F5F0E8', letterSpacing: '-0.5px' }}>
