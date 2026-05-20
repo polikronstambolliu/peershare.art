@@ -23,35 +23,37 @@ export default async function GearPage({ searchParams }: { searchParams: Promise
       <div style={{ width: '100%', lineHeight: 0 }}>
         <svg
           width="100%"
-          height="12"
-          viewBox="0 0 800 12"
+          height="20"
+          viewBox="0 0 800 20"
           preserveAspectRatio="none"
           xmlns="http://www.w3.org/2000/svg"
           className="block sm:hidden"
         >
           <defs>
-            <pattern id="clapper-sm-home" x="0" y="0" width="24" height="12" patternUnits="userSpaceOnUse">
-              <rect width="24" height="12" fill="#F5F0E8"/>
-              <polygon points="0,0 12,0 24,12 12,12" fill="#1A1714"/>
+            <pattern id="clapper-sm-home" x="0" y="0" width="40" height="20" patternUnits="userSpaceOnUse">
+              <rect width="40" height="20" fill="#1A1714"/>
+              <polygon points="0,0 20,0 40,10 20,10" fill="#4A453E"/>
+              <polygon points="0,10 20,10 40,20 20,20" fill="#4A453E"/>
             </pattern>
           </defs>
-          <rect width="800" height="12" fill="url(#clapper-sm-home)" opacity="0.5"/>
+          <rect width="800" height="20" fill="url(#clapper-sm-home)"/>
         </svg>
         <svg
           width="100%"
-          height="20"
-          viewBox="0 0 800 20"
+          height="32"
+          viewBox="0 0 800 32"
           preserveAspectRatio="none"
           xmlns="http://www.w3.org/2000/svg"
           className="hidden sm:block"
         >
           <defs>
-            <pattern id="clapper-lg-home" x="0" y="0" width="40" height="20" patternUnits="userSpaceOnUse">
-              <rect width="40" height="20" fill="#F5F0E8"/>
-              <polygon points="0,0 20,0 40,20 20,20" fill="#1A1714"/>
+            <pattern id="clapper-lg-home" x="0" y="0" width="64" height="32" patternUnits="userSpaceOnUse">
+              <rect width="64" height="32" fill="#1A1714"/>
+              <polygon points="0,0 32,0 64,16 32,16" fill="#4A453E"/>
+              <polygon points="0,16 32,16 64,32 32,32" fill="#4A453E"/>
             </pattern>
           </defs>
-          <rect width="800" height="20" fill="url(#clapper-lg-home)" opacity="0.5"/>
+          <rect width="800" height="32" fill="url(#clapper-lg-home)"/>
         </svg>
       </div>
 
@@ -71,10 +73,10 @@ export default async function GearPage({ searchParams }: { searchParams: Promise
             <div className="flex items-center gap-3 sm:gap-4">
               <svg className="w-10 h-10 sm:w-[52px] sm:h-[52px] shrink-0 block" viewBox="0 0 96 96" fill="none">
                 <circle cx="48" cy="48" r="44" stroke="#C24B1E" strokeWidth="1.5"/>
-                <line x1="21" y1="11" x2="21" y2="85" stroke="#F5F0E8" strokeWidth="1.1" opacity="0.4"/>
-                <line x1="21" y1="11" x2="89" y2="48" stroke="#F5F0E8" strokeWidth="1.1" opacity="0.4"/>
-                <line x1="21" y1="85" x2="89" y2="48" stroke="#F5F0E8" strokeWidth="1.1" opacity="0.4"/>
                 <polygon points="21,11 21,85 89,48" fill="#E8B800"/>
+                <line x1="21" y1="11" x2="21" y2="85" stroke="#F5F0E8" strokeWidth="1.2" opacity="0.4"/>
+                <line x1="21" y1="11" x2="89" y2="48" stroke="#F5F0E8" strokeWidth="1.2" opacity="0.4"/>
+                <line x1="21" y1="85" x2="89" y2="48" stroke="#F5F0E8" strokeWidth="1.2" opacity="0.4"/>
                 <circle cx="21" cy="11" r="9" fill="#1A1714" stroke="#F5F0E8" strokeWidth="1.3"/>
                 <circle cx="21" cy="85" r="9" fill="#1A1714" stroke="#F5F0E8" strokeWidth="1.3"/>
                 <circle cx="89" cy="48" r="9" fill="#1A1714" stroke="#F5F0E8" strokeWidth="1.3"/>

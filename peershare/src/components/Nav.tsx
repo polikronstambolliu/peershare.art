@@ -85,10 +85,10 @@ export default function Nav() {
         <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px' }}>
           <svg width="22" height="22" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}>
             <circle cx="48" cy="48" r="44" stroke="#C24B1E" strokeWidth="1.5"/>
-            <line x1="21" y1="11" x2="21" y2="85" stroke="#F5F0E8" strokeWidth="1.1" opacity="0.4"/>
-            <line x1="21" y1="11" x2="89" y2="48" stroke="#F5F0E8" strokeWidth="1.1" opacity="0.4"/>
-            <line x1="21" y1="85" x2="89" y2="48" stroke="#F5F0E8" strokeWidth="1.1" opacity="0.4"/>
             <polygon points="21,11 21,85 89,48" fill="#E8B800"/>
+            <line x1="21" y1="11" x2="21" y2="85" stroke="#F5F0E8" strokeWidth="1.2" opacity="0.4"/>
+            <line x1="21" y1="11" x2="89" y2="48" stroke="#F5F0E8" strokeWidth="1.2" opacity="0.4"/>
+            <line x1="21" y1="85" x2="89" y2="48" stroke="#F5F0E8" strokeWidth="1.2" opacity="0.4"/>
             <circle cx="21" cy="11" r="9" fill="#1A1714" stroke="#F5F0E8" strokeWidth="1.3"/>
             <circle cx="21" cy="85" r="9" fill="#1A1714" stroke="#F5F0E8" strokeWidth="1.3"/>
             <circle cx="89" cy="48" r="9" fill="#1A1714" stroke="#F5F0E8" strokeWidth="1.3"/>
