@@ -3,8 +3,30 @@ import './globals.css'
 import Nav from '@/components/Nav'
 
 export const metadata: Metadata = {
-  title: 'PeerShare — Filmmaker Community',
-  description: 'Share gear, find crew, help each other make films.',
+  title: 'PeerShare.art — München Filmmaker Community',
+  description: 'Borrow gear, find crew, sell equipment. A peer-to-peer platform for no-budget filmmakers in München.',
+  openGraph: {
+    title: 'PeerShare.art — München Filmmaker Community',
+    description: 'Borrow gear, find crew, sell equipment. Built by filmmakers, for filmmakers.',
+    url: 'https://www.peershare.art',
+    siteName: 'PeerShare.art',
+    images: [
+      {
+        url: 'https://www.peershare.art/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'PeerShare.art — München Filmmaker Community',
+      }
+    ],
+    locale: 'en_DE',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'PeerShare.art — München Filmmaker Community',
+    description: 'Borrow gear, find crew, sell equipment. Built by filmmakers, for filmmakers.',
+    images: ['https://www.peershare.art/og-image.jpg'],
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

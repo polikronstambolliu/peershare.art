@@ -103,22 +103,13 @@ export default async function GearPage({ searchParams }: { searchParams: Promise
             )}
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            {user ? (
+          {user && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
               <Link href="/list-gear" className="hidden sm:inline-block" style={{ background: '#C24B1E', color: '#F5F0E8', fontFamily: 'monospace', fontSize: '10px', letterSpacing: '2px', textTransform: 'uppercase', padding: '10px 20px', borderRadius: '3px', textDecoration: 'none' }}>
                 + Share Gear
               </Link>
-            ) : (
-              <>
-                <Link href="/login" style={{ color: '#7A7060', fontFamily: 'monospace', fontSize: '10px', letterSpacing: '2px', textTransform: 'uppercase', textDecoration: 'none' }}>
-                  Sign in
-                </Link>
-                <Link href="/signup" style={{ background: '#C24B1E', color: '#F5F0E8', fontFamily: 'monospace', fontSize: '10px', letterSpacing: '2px', textTransform: 'uppercase', padding: '10px 20px', borderRadius: '3px', textDecoration: 'none' }}>
-                  Join the Node
-                </Link>
-              </>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
 
