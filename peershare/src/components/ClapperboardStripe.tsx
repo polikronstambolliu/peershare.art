@@ -16,8 +16,9 @@ export default function ClapperboardStripe({ pageId }: { pageId: string }) {
       >
         <defs>
           <pattern id={smId} x="0" y="0" width="40" height="20" patternUnits="userSpaceOnUse">
-            <rect width="40" height="20" fill="#3A3530"/>
-            <polygon points="0,0 20,0 40,20 20,20" fill="#1A1714"/>
+            <rect width="40" height="20" fill="#1A1714"/>
+            <polygon points="0,0 10,0 20,20 10,20" fill="#3A3530"/>
+            <polygon points="20,0 30,0 40,20 30,20" fill="#3A3530"/>
           </pattern>
         </defs>
         <rect width="800" height="20" fill={`url(#${smId})`} opacity="1"/>
@@ -33,8 +34,9 @@ export default function ClapperboardStripe({ pageId }: { pageId: string }) {
       >
         <defs>
           <pattern id={lgId} x="0" y="0" width="64" height="32" patternUnits="userSpaceOnUse">
-            <rect width="64" height="32" fill="#3A3530"/>
-            <polygon points="0,0 32,0 64,32 32,32" fill="#1A1714"/>
+            <rect width="64" height="32" fill="#1A1714"/>
+            <polygon points="0,0 16,0 32,32 16,32" fill="#3A3530"/>
+            <polygon points="32,0 48,0 64,32 48,32" fill="#3A3530"/>
           </pattern>
         </defs>
         <rect width="800" height="32" fill={`url(#${lgId})`} opacity="1"/>
