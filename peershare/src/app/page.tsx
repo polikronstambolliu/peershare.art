@@ -21,7 +21,7 @@ export default async function GearPage({ searchParams }: { searchParams: Promise
   return (
     <div style={{ background: '#1A1714', minHeight: '100vh' }}>
 
-      <ClapperboardStripe />
+      <ClapperboardStripe pageId="home" />
 
       {/* HEADER */}
       <div style={{ borderBottom: '1px solid #2E2A26', padding: '40px 24px 32px' }}>

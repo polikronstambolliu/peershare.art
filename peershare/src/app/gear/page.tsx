@@ -30,7 +30,7 @@ export default async function GearPage({ searchParams }: { searchParams: Promise
 
   return (
     <div style={{ minHeight: '100vh', background: '#1A1714' }}>
-      <ClapperboardStripe />
+      <ClapperboardStripe pageId="gr" />
       <div className="max-w-6xl mx-auto px-4 py-12">
         <div className="flex items-center justify-between mb-8">
           <div>
