@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import { createServerSupabase } from '@/lib/supabase-server'
 import type { CSSProperties } from 'react'
-import ClapperboardStripe from '@/components/ClapperboardStripe'
 
 const buttonStyle: CSSProperties = {
   background: '#C24B1E',
@@ -26,7 +25,32 @@ export default async function MarketPage() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#1A1714' }}>
-      <ClapperboardStripe pageId="mk" />
+      <div style={{ width: '100%', lineHeight: 0 }}>
+        <svg width="100%" height="36" viewBox="0 0 800 36"
+          preserveAspectRatio="none"
+          className="hidden sm:block">
+          <defs>
+            <pattern id="clap-lg-mk" x="0" y="0" width="72" height="36" patternUnits="userSpaceOnUse">
+              <rect width="72" height="36" fill="#111009"/>
+              <polygon points="0,0 18,0 36,36 18,36" fill="#3A3530"/>
+              <polygon points="36,0 54,0 72,36 54,36" fill="#3A3530"/>
+            </pattern>
+          </defs>
+          <rect width="800" height="36" fill="url(#clap-lg-mk)"/>
+        </svg>
+        <svg width="100%" height="22" viewBox="0 0 800 22"
+          preserveAspectRatio="none"
+          className="block sm:hidden">
+          <defs>
+            <pattern id="clap-sm-mk" x="0" y="0" width="44" height="22" patternUnits="userSpaceOnUse">
+              <rect width="44" height="22" fill="#111009"/>
+              <polygon points="0,0 11,0 22,22 11,22" fill="#3A3530"/>
+              <polygon points="22,0 33,0 44,22 33,22" fill="#3A3530"/>
+            </pattern>
+          </defs>
+          <rect width="800" height="22" fill="url(#clap-sm-mk)"/>
+        </svg>
+      </div>
       <div className="max-w-6xl mx-auto px-4 py-12">
       <div className="flex items-center justify-between mb-4">
         <div>

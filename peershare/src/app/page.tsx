@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import { createServerSupabase } from '@/lib/supabase-server'
-import ClapperboardStripe from '@/components/ClapperboardStripe'
 
 const CATEGORIES = ['All', 'Camera', 'Lens', 'Lighting', 'Audio', 'Support', 'Monitor', 'Other']
 
@@ -21,7 +20,32 @@ export default async function GearPage({ searchParams }: { searchParams: Promise
   return (
     <div style={{ background: '#1A1714', minHeight: '100vh' }}>
 
-      <ClapperboardStripe pageId="home" />
+      <div style={{ width: '100%', lineHeight: 0 }}>
+        <svg width="100%" height="36" viewBox="0 0 800 36"
+          preserveAspectRatio="none"
+          className="hidden sm:block">
+          <defs>
+            <pattern id="clap-lg-home" x="0" y="0" width="72" height="36" patternUnits="userSpaceOnUse">
+              <rect width="72" height="36" fill="#111009"/>
+              <polygon points="0,0 18,0 36,36 18,36" fill="#3A3530"/>
+              <polygon points="36,0 54,0 72,36 54,36" fill="#3A3530"/>
+            </pattern>
+          </defs>
+          <rect width="800" height="36" fill="url(#clap-lg-home)"/>
+        </svg>
+        <svg width="100%" height="22" viewBox="0 0 800 22"
+          preserveAspectRatio="none"
+          className="block sm:hidden">
+          <defs>
+            <pattern id="clap-sm-home" x="0" y="0" width="44" height="22" patternUnits="userSpaceOnUse">
+              <rect width="44" height="22" fill="#111009"/>
+              <polygon points="0,0 11,0 22,22 11,22" fill="#3A3530"/>
+              <polygon points="22,0 33,0 44,22 33,22" fill="#3A3530"/>
+            </pattern>
+          </defs>
+          <rect width="800" height="22" fill="url(#clap-sm-home)"/>
+        </svg>
+      </div>
 
       {/* HEADER */}
       <div style={{ borderBottom: '1px solid #2E2A26', padding: '40px 24px 32px' }}>
