@@ -13,6 +13,7 @@ const AVAILABILITIES = [
 ]
 
 const MAX_GEAR_IMAGES = 5
+const ALLOWED_EXTENSIONS = ['jpg', 'jpeg', 'png', 'webp', 'gif', 'heic']
 
 export default function ListGearPage() {
   const router = useRouter()
@@ -50,13 +51,17 @@ export default function ListGearPage() {
     e.preventDefault()
     setSaving(true)
     setError('')
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) { router.push('/login'); return }
 
+    // Upload images from the client (storage bucket enforces image/* MIME)
     const image_urls: string[] = []
     for (let i = 0; i < imageFiles.length; i++) {
       const file = imageFiles[i]
-      const ext = file.name.split('.').pop()
+      const ext = file.name.split('.').pop()?.toLowerCase() ?? ''
+      if (!ALLOWED_EXTENSIONS.includes(ext)) {
+        setError(`File type .${ext} is not allowed. Use jpg, png, webp, gif, or heic.`)
+        setSaving(false)
+        return
+      }
       const path = `${Date.now()}-${i}.${ext}`
       const { error: upErr } = await supabase.storage.from('gear-images').upload(path, file)
       if (!upErr) {
@@ -66,20 +71,28 @@ export default function ListGearPage() {
     }
     const image_url = image_urls[0] ?? null
 
-    const { error: insErr } = await supabase.from('gear').insert({
-      owner_id: user.id,
-      title: form.title,
-      description: withAvailability(form.description, availabilityWindow),
-      category: form.category,
-      condition: form.condition,
-      availability: form.availability,
-      price_per_day: form.availability === 'paid' ? parseFloat(form.price_per_day) : null,
-      location: form.location || null,
-      image_url,
-      image_urls: image_urls.length ? image_urls : null,
+    const res = await fetch('/api/posts/gear', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        title: form.title,
+        description: withAvailability(form.description, availabilityWindow),
+        category: form.category,
+        condition: form.condition,
+        availability: form.availability,
+        price_per_day: form.price_per_day,
+        location: form.location || null,
+        image_url,
+        image_urls: image_urls.length ? image_urls : null,
+      }),
     })
 
-    if (insErr) { setError(insErr.message); setSaving(false); return }
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}))
+      setError(body.error || 'Failed to save gear.')
+      setSaving(false)
+      return
+    }
     router.push('/gear')
   }
 

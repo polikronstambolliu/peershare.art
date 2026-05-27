@@ -29,22 +29,28 @@ export default function NewHelpRequestPage() {
     e.preventDefault()
     setSaving(true)
     setError('')
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) { router.push('/login'); return }
 
-    const { error: err } = await supabase.from('help_requests').insert({
-      author_id: user.id,
-      title: form.title,
-      description: form.description,
-      type: form.type,
-      skills_needed: skills,
-      location: form.location || null,
-      date_from: form.date_from || null,
-      date_to: form.date_to || null,
-      is_paid: form.is_paid,
+    const res = await fetch('/api/posts/help-request', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        title: form.title,
+        description: form.description,
+        type: form.type,
+        skills_needed: skills,
+        location: form.location || null,
+        date_from: form.date_from || null,
+        date_to: form.date_to || null,
+        is_paid: form.is_paid,
+      }),
     })
 
-    if (err) { setError(err.message); setSaving(false); return }
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}))
+      setError(body.error || 'Failed to post request.')
+      setSaving(false)
+      return
+    }
     router.push('/help-board')
   }
 

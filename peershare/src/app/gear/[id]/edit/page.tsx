@@ -9,6 +9,7 @@ import DeleteGearButton from './DeleteGearButton'
 
 const CATEGORIES = ['Camera', 'Lens', 'Lighting', 'Audio', 'Support', 'Monitor', 'Other']
 const CONDITIONS = [{ v: 'excellent', l: 'Excellent' }, { v: 'good', l: 'Good' }, { v: 'fair', l: 'Fair' }]
+const ALLOWED_EXTENSIONS = ['jpg', 'jpeg', 'png', 'webp', 'gif', 'heic']
 const AVAILABILITIES = [
   { v: 'free', l: 'Free to borrow', desc: 'No cost - just return it in good shape' },
   { v: 'by_agreement', l: 'By agreement', desc: 'Discuss terms with the borrower' },
@@ -132,7 +133,12 @@ export default function EditGearPage() {
 
     let image_url = currentItem.image_url || null
     if (imageFile) {
-      const ext = imageFile.name.split('.').pop()
+      const ext = imageFile.name.split('.').pop()?.toLowerCase() ?? ''
+      if (!ALLOWED_EXTENSIONS.includes(ext)) {
+        setError(`File type .${ext} is not allowed. Use jpg, png, webp, gif, or heic.`)
+        setSaving(false)
+        return
+      }
       const path = `${Date.now()}.${ext}`
       const { error: upErr } = await supabase.storage.from('gear-images').upload(path, imageFile)
       if (!upErr) {

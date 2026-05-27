@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 
 const CATEGORIES = ['Camera', 'Lens', 'Lighting', 'Audio', 'Support', 'Monitor', 'Other']
 const CONDITIONS = [{ v: 'excellent', l: 'Excellent — like new' }, { v: 'good', l: 'Good — minor signs of use' }, { v: 'fair', l: 'Fair — visible wear, fully functional' }]
+const ALLOWED_EXTENSIONS = ['jpg', 'jpeg', 'png', 'webp', 'gif', 'heic']
 
 export default function SellGearPage() {
   const router = useRouter()
@@ -26,12 +27,15 @@ export default function SellGearPage() {
     e.preventDefault()
     setSaving(true)
     setError('')
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) { router.push('/login'); return }
 
     let image_url = null
     if (imageFile) {
-      const ext = imageFile.name.split('.').pop()
+      const ext = imageFile.name.split('.').pop()?.toLowerCase() ?? ''
+      if (!ALLOWED_EXTENSIONS.includes(ext)) {
+        setError(`File type .${ext} is not allowed. Use jpg, png, webp, gif, or heic.`)
+        setSaving(false)
+        return
+      }
       const path = `market-${Date.now()}.${ext}`
       const { error: upErr } = await supabase.storage.from('gear-images').upload(path, imageFile)
       if (!upErr) {
@@ -40,18 +44,26 @@ export default function SellGearPage() {
       }
     }
 
-    const { error: err } = await supabase.from('gear_market').insert({
-      seller_id: user.id,
-      title: form.title,
-      description: form.description || null,
-      category: form.category,
-      condition: form.condition,
-      price: parseFloat(form.price),
-      location: form.location || null,
-      image_url,
+    const res = await fetch('/api/posts/market', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        title: form.title,
+        description: form.description || null,
+        category: form.category,
+        condition: form.condition,
+        price: form.price,
+        location: form.location || null,
+        image_url,
+      }),
     })
 
-    if (err) { setError(err.message); setSaving(false); return }
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}))
+      setError(body.error || 'Failed to create listing.')
+      setSaving(false)
+      return
+    }
     router.push('/market')
   }
 

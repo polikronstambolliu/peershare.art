@@ -1,6 +1,5 @@
 'use client'
 import { useState } from 'react'
-import { createClient } from '@/lib/supabase'
 
 const contactButtonStyle: React.CSSProperties = {
   background: '#C24B1E',
@@ -27,14 +26,14 @@ function digitsOnly(value: string) {
   return value.replace(/\D/g, '')
 }
 
-export default function ContactButton({ ownerId, ownerName }: {
-  ownerId: string
+export default function ContactButton({ gearId, ownerName }: {
+  gearId: string
   ownerName: string
 }) {
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const [contact, setContact] = useState<OwnerContact | null>(null)
-  const supabase = createClient()
+  const [fetchError, setFetchError] = useState('')
 
   const handleClick = async () => {
     if (open) {
@@ -42,14 +41,23 @@ export default function ContactButton({ ownerId, ownerName }: {
       return
     }
     setLoading(true)
-    const { data } = await supabase
-      .from('profiles')
-      .select('phone, whatsapp, signal, full_name')
-      .eq('id', ownerId)
-      .single()
-    setContact(data)
-    setLoading(false)
-    setOpen(true)
+    setFetchError('')
+    try {
+      const res = await fetch(`/api/contact/${gearId}`)
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}))
+        setFetchError(body.error || 'Could not load contact info.')
+        setLoading(false)
+        return
+      }
+      const data: OwnerContact = await res.json()
+      setContact(data)
+      setOpen(true)
+    } catch {
+      setFetchError('Network error. Please try again.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   const displayName = contact?.full_name || ownerName
@@ -75,6 +83,12 @@ export default function ContactButton({ ownerId, ownerName }: {
       >
         {loading ? 'Loading…' : '▶ Contact Peer'}
       </button>
+
+      {fetchError && (
+        <p style={{ fontFamily: 'monospace', color: '#C24B1E', fontSize: '11px', marginTop: '8px' }}>
+          {fetchError}
+        </p>
+      )}
 
       {open && contact && (
         <div

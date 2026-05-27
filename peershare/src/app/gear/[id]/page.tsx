@@ -72,7 +72,7 @@ export default async function GearDetailPage({ params }: { params: Promise<{ id:
 
           {user && user.id !== (item.profiles as any)?.id && (
             <ContactButton
-              ownerId={(item.profiles as any)?.id}
+              gearId={item.id}
               ownerName={(item.profiles as any)?.full_name || (item.profiles as any)?.username}
             />
           )}
