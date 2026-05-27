@@ -121,6 +121,32 @@ export default async function HelpBoardPage() {
         </div>
       )}
       </div>
+      <div style={{ width: '100%', lineHeight: 0 }}>
+        <svg width="100%" height="48" viewBox="0 0 800 48"
+          preserveAspectRatio="none"
+          className="hidden sm:block">
+          <defs>
+            <pattern id="clap-lg-hb-b" x="0" y="0" width="96" height="48" patternUnits="userSpaceOnUse">
+              <rect width="96" height="48" fill="#111009"/>
+              <polygon points="0,0 24,0 48,48 24,48" fill="#4A4540"/>
+              <polygon points="48,0 72,0 96,48 72,48" fill="#4A4540"/>
+            </pattern>
+          </defs>
+          <rect width="800" height="48" fill="url(#clap-lg-hb-b)"/>
+        </svg>
+        <svg width="100%" height="30" viewBox="0 0 800 30"
+          preserveAspectRatio="none"
+          className="block sm:hidden">
+          <defs>
+            <pattern id="clap-sm-hb-b" x="0" y="0" width="60" height="30" patternUnits="userSpaceOnUse">
+              <rect width="60" height="30" fill="#111009"/>
+              <polygon points="0,0 15,0 30,30 15,30" fill="#4A4540"/>
+              <polygon points="30,0 45,0 60,30 45,30" fill="#4A4540"/>
+            </pattern>
+          </defs>
+          <rect width="800" height="30" fill="url(#clap-sm-hb-b)"/>
+        </svg>
+      </div>
     </div>
   )
 }
