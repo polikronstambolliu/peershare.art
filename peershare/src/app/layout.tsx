@@ -5,6 +5,13 @@ import Nav from '@/components/Nav'
 export const metadata: Metadata = {
   title: 'PeerShare.art — München Filmmaker Community',
   description: 'Borrow gear, find crew, sell equipment. A peer-to-peer platform for no-budget filmmakers in München.',
+  icons: {
+    icon: [
+      { url: '/favicon-32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
+    ],
+    apple: '/apple-touch-icon.png',
+  },
   openGraph: {
     title: 'PeerShare.art — München Filmmaker Community',
     description: 'Borrow gear, find crew, sell equipment. Built by filmmakers, for filmmakers.',
