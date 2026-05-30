@@ -5,11 +5,14 @@ import Nav from '@/components/Nav'
 export const metadata: Metadata = {
   title: 'PeerShare.art — München Filmmaker Community',
   description: 'Borrow gear, find crew, sell equipment. A peer-to-peer platform for no-budget filmmakers in München.',
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'PeerShare.art',
+  },
   icons: {
-    icon: [
-      { url: '/favicon-32.png', sizes: '32x32', type: 'image/png' },
-      { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
-    ],
+    icon: '/favicon-32.png',
     apple: '/apple-touch-icon.png',
   },
   openGraph: {
@@ -39,6 +42,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      <head>
+        <meta name="theme-color" content="#1A1714" />
+      </head>
       <body className="min-h-screen font-sans antialiased">
         <Nav />
         <main>{children}</main>
